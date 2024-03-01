@@ -6,8 +6,7 @@ using OpenAI;
 public class ChatGPTManager : MonoBehaviour
 {
 
-    private OpenAIApi openAI = new OpenAIApi(); //alternative to directly adding ssh key in project
-    //causing an error because the name was updated on Git package's API?
+    private OpenAIApi openAI = new OpenAIApi(); //is the error here?
     private List<ChatMessage> messages = new List<ChatMessage>(); //list of GPT Messages
 
 
@@ -18,15 +17,15 @@ public class ChatGPTManager : MonoBehaviour
         ChatMessage newMessage = new ChatMessage();
         newMessage.Content = newText;
         newMessage.Role = "user";
-
         messages.Add(newMessage); //adding the message to the List to send to ChatGPT
 
-        //making request to OpenAI with messages
-        CreateChatCompletionRequest request = new CreateChatCompletionRequest();
+        //making request to OpenAI with messages List
+        CreateChatCompletionRequest request = new CreateChatCompletionRequest(); // saying this class doesn't exist
         request.Messages = messages;
         request.Model = "gpt-3.5-turbo";
 
-        var response = await openAI.CreateChatCompletionRequest(request); //"await" = waiting to get GPT response b4 continuing 
+        //contrary to Valum, this is CreateChatCompletion, not CreateChatCompletionRequest?
+        var response = await openAI.CreateChatCompletion(request); //"await" = waiting to get GPT response b4 continuing 
 
         //checking the GPT responses
         if(response.Choices != null && response.Choices.Count > 0) //checking it exists
