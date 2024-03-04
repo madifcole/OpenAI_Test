@@ -6,13 +6,16 @@ using OpenAI;
 public class ChatGPTManager : MonoBehaviour
 {
 
-    private OpenAIApi openAI = new OpenAIApi(); //is the error here?
+    private OpenAIApi openAI = new OpenAIApi("enter-key"); //having to hardcode. Not the best but eh
+    
+    //according to the api, it scans for the auth file...which it's not finding /:
     private List<ChatMessage> messages = new List<ChatMessage>(); //list of GPT Messages
 
 
     public async void AskChatGPT(string newText)
-    {   
-
+    { 
+        //is the error because of type?
+        
         //creating new messages
         ChatMessage newMessage = new ChatMessage();
         newMessage.Content = newText;
