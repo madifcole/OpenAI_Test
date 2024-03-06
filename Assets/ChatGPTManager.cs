@@ -1,12 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using OpenAI; 
+using OpenAI;
+using UnityEngine.Events;
 
 public class ChatGPTManager : MonoBehaviour
 {
+    public OnResponseEvent OnResponse;
 
-    private OpenAIApi openAI = new OpenAIApi("enter-key"); //having to hardcode. Not the best but eh
+    [System.Serializable]
+    public class OnResponseEvent : UnityEvent<string> { }
+
+    private OpenAIApi openAI = new OpenAIApi(); //having to hardcode. Not the best but eh
     
     //according to the api, it scans for the auth file...which it's not finding /:
     private List<ChatMessage> messages = new List<ChatMessage>(); //list of GPT Messages
@@ -36,7 +41,9 @@ public class ChatGPTManager : MonoBehaviour
             var chatResponse = response.Choices[0].Message; //adding first choice of response to message list
             messages.Add(chatResponse);
             
-            Debug.Log(chatResponse.Content); //debugging to console
+            //Debug.Log(chatResponse.Content); //debugging to console
+
+            OnResponse.Invoke(chatResponse.Content);
         }
     }
    
